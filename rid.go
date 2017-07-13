@@ -46,7 +46,14 @@ func NewRID20() string {
 func NewRID20Signed(secret string) string {
 	var r = NewRIDn(20)
 	return r + HMAC(r, secret)
+}
 
+func NewRID20SignedBatch(secret string, n int) []string {
+	var result = make([]string, n)
+	for i := 0; i < n; i++ {
+		result[i] = NewRID20Signed(secret)
+	}
+	return result
 }
 
 // first 16 characters of hexed sha256 hmac
